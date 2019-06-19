@@ -10,18 +10,16 @@ token = "API TOKEN"
 
 client = discord.Client()
 
+#List all the available commands in the dictionary below
 functions = {
 	"!help" : "Help, dah!",
 	"!avatar" : "So you may know who rebuilt my face.",
-	"!roll" : "Let me roll dice for you by writing this command followed by '***!r 1d6***' for instance. Go Fish!"
+	"!roll" : "Let me roll dice for you by writing this command followed by '***!roll 1d6***' for instance. Go Fish!"
 }
 
 @client.event
 async def on_ready():
-	print('Logged in as')
-	print(client.user.name)
-	print(client.user.id)
-	print('------')
+	print("Logged in as",client.user.name,client.user.id,"------",sep="\n")
 	print("I got my gun, my beer, a fire in my belly, and a grin on my face.")
 
 @client.event
