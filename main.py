@@ -1,10 +1,10 @@
 import discord
-import random
+import commands
 
 #################/!\#################
 #to remove before uploading to github
 #################/!\#################
-token = "API TOKEN"
+token = "API_TOKEN"
 #################/!\#################
 #################/!\#################
 
@@ -30,48 +30,19 @@ async def on_message(message):
 	
 	#if block to trigger the !help functionality
 	if message.content.startswith("!help"):
-		msg_1 = "**Available Commands**\nHello {0.author.mention}. ".format(message)
-		msg_2 = f"I currently have {len(functions)} commands."
-		msg_3 = ""
-		msg_4 = "\nFor help with a particular command, use ``?help`` followed by the command name."
-		for index, key in enumerate(functions.keys()):
-			msg_3 += key + ", " if index + 1 < len(functions) else key
-		await message.channel.send(msg_1+msg_2+"```"+msg_3+"```"+msg_4)
+		await message.channel.send(commands.main_help(message, functions))
 	
 	#if block to trigger the ?help functionality
 	if message.content.startswith("?help "):
-		msg = "Beep, boop! I'm not a smart pony!"
-		split_msg = str(message.content).split(" ")
-		if (split_msg[1] in functions.keys()) or ("!" + split_msg[1] in functions.keys()):
-			if split_msg[1] in functions.keys():
-				msg = functions[split_msg[1]]
-			else:
-				msg = functions["!" + split_msg[1]]
-		await message.channel.send(msg)
+		await message.channel.send(commands.specific_help(message, functions))
 	
 	#if block to trigger the !avatar functionality
 	if message.content.startswith("!avatar"):
-		msg_1 = "Hello {0.author.mention}.\n".format(message)
-		msg_2 = "My avatar was made by: ScarfyAce. " + \
-		"Please check their reddit:\n" + \
-		"https://www.reddit.com/user/ScarfyAce/"
-		await message.channel.send(msg_1 + msg_2)
+		await message.channel.send(commands.avatar(message))
 	
 	# if block to trigger the !r 'i.e dice' functionality
 	if message.content.startswith("!roll "):
-		msg = "Beep, boop! I'm not a smart pony!"
-		split_msg = str(message.content).split(" ")
-		print("{0.author.mention} requested a die throw.".format(message))
-		for bit in split_msg:
-			split = bit.split("d")
-			if len(split) == 2:
-				if split[0].isdigit() and split[1].isdigit():
-					if msg == "Beep, boop! I'm not a smart pony!":
-						msg = "Your results, {0.author.mention}!\n".format(message)
-						msg += f"{random.randrange(0, int(split[0]) * int(split[1]) + 1)}\n"
-					else:
-						msg += f"{random.randrange(0, int(split[0]) * int(split[1]) + 1)}\n"
-		await message.channel.send(msg)
+		await message.channel.send(commands.roll(message))
 
 @client.event
 async def on_error(event, *args, **kwargs):
