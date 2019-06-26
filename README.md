@@ -7,10 +7,11 @@ Available functionalities:
 4. Avatar: Botjack cites the source of her avatar picture when prompted with !avatar
 
 Current packaging:
-botjack_discord_bot
-|-- commands
-|	|-- __init__.py
-|	|-- commands
-|-- README.md
-|-- LICENSE
-|-- main.py
+
+ * botjack_discord_bot
+    * commands
+        * init.py
+        * commands.py 
+    * README.md
+    * LICENSE
+    * main.py
