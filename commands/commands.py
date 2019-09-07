@@ -9,22 +9,24 @@ from urllib.request import Request, urlopen
 def main_help(message, functions):
 	"""
 	Prints the !help message to the chat.
+	-----
 	:param <message>: <class 'discord.message.Message'> ; user message triggering a bot event
-	:param <functions>: <class 'dict'> ; dictionary of available commands for botjack
+	:param <functions>: <class 'dict'> ; dictionary of available botjack commands
 	"""
 	msg = ""
 	for index, key in enumerate(functions.keys()):
 		msg += key + ", " if index + 1 < len(functions) else key
 	else:
-		msg = f"**Available Commands**\nHello {message.author.mention}. I currently have {len(functions)} commands." + \
+		msg = f"**Available Commands**\nHello {message.author.mention}. I currently have {len(functions)} functions or commands." + \
 		"```" + msg + "```\nFor help with a particular command, use ``?help`` followed by the command name."
 	return msg
 
 def specific_help(message, functions):
 	"""
 	Prints the specific ?help <command> message to the chat.
+	-----
 	:param <message>: <class 'discord.message.Message'> ; user message triggering a bot event
-	:param <functions>: <class 'dict'> ; dictionary of available commands for botjack	
+	:param <functions>: <class 'dict'> ; dictionary of available botjack commands	
 	"""
 	msg = "Beep, boop! I'm not a smart pony!"
 	split_msg = str(message.content).split(" ")
@@ -35,6 +37,7 @@ def specific_help(message, functions):
 def avatar(message):
 	"""
 	Cites the creator of botjack's avatar.
+	-----
 	:param <message>: <class 'discord.message.Message'> ; user message triggering a bot event
 	"""
 	msg = f"Hello {message.author.mention}.\nMy avatar was made by: ScarfyAce. Please check their reddit:\n" + \
@@ -43,7 +46,8 @@ def avatar(message):
 
 def roll(message):
 	"""
-	Rolls dice requested by a user.
+	Rolls dice as requested by a user.
+	-----
 	:param <message>: <class 'discord.message.Message'> ; user message triggering a bot event
 	"""
 	msg = "Beep, boop! I'm not a smart pony!"
@@ -71,7 +75,8 @@ def roll(message):
 def run_model():
 	"""
 	Runs the ML-trained model.
-	No arguments
+	-----
+	No args.
 	"""
 	dirname, filename = os.path.split(os.path.abspath(__file__))
 	model = load_model(dirname + "\\model.h5")
@@ -83,13 +88,16 @@ def run_model():
 def ml_check(attachments, model):
 	"""
 	Checks whether the picture is safe or unsafe based on a ML-trained model
-	:param <attachments>: TBD ; TBD
-	:param <model>: TBD ; TBD
+	-----
+	:param <attachments>: <class 'discord.message.Message.attachments'> ; metadata of the user 
+	message's atachment
+	:param <model>: <HDF5 dataset>  ; trained ML model, see Model 1 here: https://github.com/LMquentinLR/MLpy
 	"""
 	
 	def load_image(url):
 		"""
 		Formats an image to fit the ML-trained model
+		-----
 		:param <url>: String ; url of image to test
 		"""
 		req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -105,16 +113,17 @@ def ml_check(attachments, model):
 	
 	attachment = attachments[0].url
 	
-	for ext in pic_ext:
-		if attachment.endswith(ext):
-			img = load_image(attachment)
-			classes = model.predict_classes(img, verbose=0)
-			#classes = model.predict_proba(img, verbose=1)
-			print(classes)
-			print(type(classes))
-			if classes[0] == 0:
-				msg = "This picture is safe for work."
-			else:
-				msg = "This picture is lood!"
-	
+	try:
+		for ext in pic_ext:
+			if attachment.endswith(ext):
+				img = load_image(attachment)
+				classes = model.predict_classes(img, verbose=0)
+				print(classes)
+				print(type(classes))
+				if classes[0] == 0:
+					msg = "This picture is safe for work."
+				else:
+					msg = "This picture is lood!"
+	except Error as e:
+		print(e)
 	return msg
