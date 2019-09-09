@@ -12,6 +12,7 @@ It offers several functionalities:
 
 ### Installation
 botjack_discord_bot requires Python 3.x to run. It uses the following modules:
+
 | Module names |
 | ------ |
 | cv2 |
