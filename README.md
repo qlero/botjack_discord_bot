@@ -22,7 +22,7 @@ botjack_discord_bot requires Python 3.x to run. It uses the following modules:
 | numpy |
 | os |
 | random |
-| urllib.request|
+| urllib.request |
 
 Install the dependencies.
 
