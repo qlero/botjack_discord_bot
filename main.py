@@ -33,10 +33,15 @@ async def on_error(message):
 	await bot.process_commands(message)
 
 @bot.event
-async def on_message(message):		
+async def on_message(message):
+	# for loop checking for embeds
+	for item in message.embeds:
+		msg = local_commands.ml_check(item.to_dict()["thumbnail"]["url"], model, True)
+		await message.channel.send(msg)
+		
 	# if block trigger for an attachment
 	if message.attachments:
-		msg = local_commands.ml_check(message.attachments, model)
+		msg = local_commands.ml_check(message.attachments, model, False)
 		await message.channel.send(msg)
 	await bot.process_commands(message)
 

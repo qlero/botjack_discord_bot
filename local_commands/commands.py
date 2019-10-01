@@ -76,13 +76,14 @@ def run_model():
 				metrics = ["accuracy"])
 	return model
 	
-def ml_check(attachments, model):
+def ml_check(attachments, model, embed):
 	"""
 	Checks whether the picture is safe or unsafe based on a ML-trained model
 	-----
 	:param <attachments>: <class 'discord.message.Message.attachments'> ; metadata of the user 
 	message's atachment
 	:param <model>: <HDF5 dataset>  ; trained ML model, see Model 1 here: https://github.com/LMquentinLR/MLpy
+	:param <embed>: <boolean>  ; indicates if the attachment is a direct one or an embed
 	"""
 	
 	def load_image(url):
@@ -102,7 +103,10 @@ def ml_check(attachments, model):
 	msg = "Beep, boop! I'm not a smart pony!"
 	pic_ext = [".jpg", ".png", ".jpeg"]
 	
-	attachment = attachments[0].url
+	if embed:
+		attachment = attachments
+	else:
+		attachment = attachments[0].url
 	
 	try:
 		for ext in pic_ext:
