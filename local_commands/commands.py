@@ -1,6 +1,7 @@
 import cv2
 from keras.models import load_model
 from keras.preprocessing import image
+from keras.optimizers import RMSprop
 import numpy as np
 import os
 import random
@@ -63,20 +64,26 @@ def roll(roll, author):
 	
 	return msg
 
-def run_model():
+def run_model(opti):
 	"""
 	Runs the ML-trained model.
 	-----
-	No args.
+	:param <opti>: String ; optimizer type
 	"""
 	dirname, filename = os.path.split(os.path.abspath(__file__))
-	model = load_model(dirname + "\\model.h5")
-	model.compile(loss = "binary_crossentropy",
-				optimizer = "rmsprop",
-				metrics = ["accuracy"])
+	if opti == "rmsprop":
+		model = load_model(dirname + "\\model_RMSprop.h5")	
+		model.compile(loss = "binary_crossentropy",
+					optimizer = RMSprop(),
+					metrics = ["accuracy"])
+	else:
+		model = load_model(dirname + "\\model_adam.h5")	
+		model.compile(loss = "binary_crossentropy",
+					optimizer = "adam",
+					metrics = ["accuracy"])
 	return model
 	
-def ml_check(attachments, model, embed):
+def ml_check(attachments, model_rmsprop, model_adam, embed):
 	"""
 	Checks whether the picture is safe or unsafe based on a ML-trained model
 	-----
@@ -112,13 +119,12 @@ def ml_check(attachments, model, embed):
 		for ext in pic_ext:
 			if attachment.endswith(ext):
 				img = load_image(attachment)
-				classes = model.predict_classes(img, verbose=0)
-				print(classes)
-				print(type(classes))
-				if classes[0] == 0:
-					msg = "This picture is safe for work."
-				else:
-					msg = "This picture is lood!"
+				classes_rmsprop = model_rmsprop.predict_classes(img, verbose=0)
+				classes_adam = model_adam.predict_classes(img, verbose=0)
+				print(classes_rmsprop, type(classes_rmsprop), classes_adam, type(classes_adam))
+				msg = ""
+				msg += "RMSprop-optimized model says 'safe picture!'\n" if classes_rmsprop[0] == 0 else "RMSprop-optimized model says 'LOOD!'\n"
+				msg += "Adam-optimized model says 'safe picture!'\n" if classes_rmsprop[0] == 0 else "Adam-optimized model says 'LOOD!'\n"
 	except Error as e:
 		print(e)
 	return msg

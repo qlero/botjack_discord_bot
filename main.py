@@ -1,6 +1,7 @@
 #import discord
 from discord.ext import commands
 import local_commands
+import time
 
 #################/!\#################
 #to remove before uploading to github
@@ -10,8 +11,9 @@ token = "PLACE TOKEN HERE"
 #################/!\#################
 
 bot = commands.Bot(command_prefix = "!")
-	
-model = local_commands.run_model()
+
+model_rmsprop = local_commands.run_model("rmsprop")	
+model_adam = local_commands.run_model("adam")
 
 #List all the available commands in the dictionary below
 functions = {
@@ -34,15 +36,19 @@ async def on_error(message):
 
 @bot.event
 async def on_message(message):
+	print("message detected")
+	ml = ""
 	# for loop checking for embeds
 	for item in message.embeds:
-		msg = local_commands.ml_check(item.to_dict()["thumbnail"]["url"], model, True)
+		url = item.to_dict()["thumbnail"]["url"]
+		msg = local_commands.ml_check(url, model_rmsprop, model_adam, True)
 		await message.channel.send(msg)
 		
 	# if block trigger for an attachment
 	if message.attachments:
-		msg = local_commands.ml_check(message.attachments, model, False)
+		msg = local_commands.ml_check(message.attachments, model_rmsprop, model_adam, False)
 		await message.channel.send(msg)
+	
 	await bot.process_commands(message)
 
 @bot.command()
