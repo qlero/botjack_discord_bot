@@ -6,14 +6,13 @@ import time
 #################/!\#################
 #to remove before uploading to github
 #################/!\#################
-token = "PLACE TOKEN HERE"
+token = "YOUR TOKEN HERE"
 #################/!\#################
 #################/!\#################
 
 bot = commands.Bot(command_prefix = "!")
 
-model_rmsprop = local_commands.run_model("rmsprop")	
-model_adam = local_commands.run_model("adam")
+model = local_commands.run_model()
 
 #List all the available commands in the dictionary below
 functions = {
@@ -41,12 +40,12 @@ async def on_message(message):
 	# for loop checking for embeds
 	for item in message.embeds:
 		url = item.to_dict()["thumbnail"]["url"]
-		msg = local_commands.ml_check(url, model_rmsprop, model_adam, True)
+		msg = local_commands.ml_check(url, model, True)
 		await message.channel.send(msg)
 		
 	# if block trigger for an attachment
 	if message.attachments:
-		msg = local_commands.ml_check(message.attachments, model_rmsprop, model_adam, False)
+		msg = local_commands.ml_check(message.attachments, model, False)
 		await message.channel.send(msg)
 	
 	await bot.process_commands(message)
@@ -77,6 +76,6 @@ async def roll(ctx, *args):
 	author = ctx.message.author.mention
 	for arg in args:
 		msg += f"``{arg}``: " + local_commands.roll(arg, author) + "\n"
-	await ctx.send(msg)
+	if msg != "Your results:\n": await ctx.send(msg)
 
 bot.run(token, reconnect=True)

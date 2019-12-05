@@ -64,26 +64,18 @@ def roll(roll, author):
 	
 	return msg
 
-def run_model(opti):
+def run_model():
 	"""
 	Runs the ML-trained model.
 	-----
 	:param <opti>: String ; optimizer type
 	"""
 	dirname, filename = os.path.split(os.path.abspath(__file__))
-	if opti == "rmsprop":
-		model = load_model(dirname + "\\model_RMSprop.h5")	
-		model.compile(loss = "binary_crossentropy",
-					optimizer = RMSprop(),
-					metrics = ["accuracy"])
-	else:
-		model = load_model(dirname + "\\model_adam.h5")	
-		model.compile(loss = "binary_crossentropy",
-					optimizer = "adam",
-					metrics = ["accuracy"])
+	model = load_model(dirname + "\\model.h5")	
+	model.compile(loss = "binary_crossentropy", optimizer = "adam", metrics = ["accuracy"])
 	return model
 	
-def ml_check(attachments, model_rmsprop, model_adam, embed):
+def ml_check(attachments, model, embed):
 	"""
 	Checks whether the picture is safe or unsafe based on a ML-trained model
 	-----
@@ -103,8 +95,8 @@ def ml_check(attachments, model_rmsprop, model_adam, embed):
 		url_response = urlopen(req).read()
 		img_array = np.array(bytearray(url_response), dtype=np.uint8)
 		img = cv2.imdecode(img_array, 0)
-		img = cv2.resize(img, (224,224))
-		img = np.reshape(img, [-1, 224, 224, 1])
+		img = cv2.resize(img, (256,256))
+		img = np.reshape(img, [-1, 256, 256, 1])
 		return img
 		
 	msg = "Beep, boop! I'm not a smart pony!"
@@ -119,12 +111,13 @@ def ml_check(attachments, model_rmsprop, model_adam, embed):
 		for ext in pic_ext:
 			if attachment.endswith(ext):
 				img = load_image(attachment)
-				classes_rmsprop = model_rmsprop.predict_classes(img, verbose=0)
-				classes_adam = model_adam.predict_classes(img, verbose=0)
-				print(classes_rmsprop, type(classes_rmsprop), classes_adam, type(classes_adam))
+				classes = model.predict_classes(img, verbose=0)
+				print(classes, type(classes))
 				msg = ""
-				msg += "RMSprop-optimized model says 'safe picture!'\n" if classes_rmsprop[0] == 0 else "RMSprop-optimized model says 'LOOD!'\n"
-				msg += "Adam-optimized model says 'safe picture!'\n" if classes_rmsprop[0] == 0 else "Adam-optimized model says 'LOOD!'\n"
+				if classes[0] == 0:
+					msg += "Adam-optimized model says 'safe picture!'\n" 
+				else: 
+					msg += "Adam-optimized model says 'LOOD!'\n"
 	except Error as e:
 		print(e)
 	return msg
