@@ -1,4 +1,3 @@
-#import discord
 from discord.ext import commands
 import local_commands
 import time
@@ -6,7 +5,7 @@ import time
 #################/!\#################
 #to remove before uploading to github
 #################/!\#################
-token = "YOUR TOKEN HERE"
+token = "NTkwMzMzNTc4NzIyNjcyNjQw.XQhKbw.3nHNVvaN1WqSXkjlYsGS9br-UmM"
 #################/!\#################
 #################/!\#################
 

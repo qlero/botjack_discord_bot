@@ -1,7 +1,6 @@
 import cv2
 from keras.models import load_model
 from keras.preprocessing import image
-from keras.optimizers import RMSprop
 import numpy as np
 import os
 import random
