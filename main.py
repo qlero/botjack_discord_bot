@@ -5,7 +5,7 @@ import time
 #################/!\#################
 #to remove before uploading to github
 #################/!\#################
-token = "NTkwMzMzNTc4NzIyNjcyNjQw.XQhKbw.3nHNVvaN1WqSXkjlYsGS9br-UmM"
+token = "PLACE TOKEN HERE"
 #################/!\#################
 #################/!\#################
 
