@@ -70,9 +70,15 @@ target/
 # pyenv
 .python-version
 
-# VS env
+# Environments
 .env
-/.vs 
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.env
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.

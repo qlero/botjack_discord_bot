@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-botjack_discord_bot",
+      "appliesTo": "/",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-setup",
+      "appliesTo": "setup.py",
+      "type": "launch"
+    }
+  ]
+}
