@@ -2,7 +2,6 @@ import cv2
 from keras.models import load_model
 from keras.preprocessing import image
 import numpy as np
-import os
 import random
 from urllib.request import Request, urlopen
 
@@ -63,14 +62,13 @@ def roll(roll, author):
 	
 	return msg
 
-def run_model():
+def run_model(path):
 	"""
 	Runs the ML-trained model.
 	-----
-	:param <opti>: String ; optimizer type
+	:param <path>: String ; path of model
 	"""
-	dirname, filename = os.path.split(os.path.abspath(__file__))
-	model = load_model(dirname + "\\model.h5")	
+	model = load_model(path)	
 	model.compile(loss = "binary_crossentropy", optimizer = "adam", metrics = ["accuracy"])
 	return model
 	
