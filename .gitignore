@@ -69,6 +69,9 @@ target/
 
 # pyenv
 .python-version
+.env
+.env/
+*.env
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
@@ -160,6 +163,8 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+.vs
+*.vs
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
