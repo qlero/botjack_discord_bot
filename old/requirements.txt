@@ -1,0 +1,14 @@
+DateTime
+discord.py
+html5lib
+Keras
+Keras-Applications
+Keras-Preprocessing
+notebook
+numpy
+opencv-python
+python-dateutil
+requests
+requests-html
+tensorflow
+tensorflow-estimator

@@ -8,12 +8,30 @@ import time
 #################/!\#################
 #to remove before uploading to github
 #################/!\#################
-token = ""
+token = "NTkwMzMzNTc4NzIyNjcyNjQw.XeyS4Q.gWG8kzmfCaat7LN7Mz7WhtoOqso"
 #################/!\#################
 #################/!\#################
 
-print(os.getcwd())
-model = local_commands.run_model(os.getcwd()+"\\models\\selected_model.h5")
+#Parses the command line arguments provided to specify which model to use
+parser = argparse.ArgumentParser()
+subparsers = parser.add_subparsers()
+bot_parser = subparsers.add_parser("botjack")
+bot_parser.add_argument("--model_1", action = "store_true", default = True, dest = "model_1", help = "")
+bot_parser.add_argument("--model_2", action = "store_true", default = False, dest = "model_2", help = "")
+bot_parser.add_argument("--model_3", action = "store_true", default = False, dest = "model_3", help = "")
+bot_args = bot_parser.parse_args()
+
+dirname, filename = os.path.split(os.path.abspath(__file__))
+if bool(bot_args.model_2) ^ bool(bot_args.model_3):
+	if bot_args.model_2:
+		print("Launching the model: 32batches, 5convl, 2FCl, 5 epochs")
+		model = local_commands.run_model(dirname + "\\models\\NSFWdetect_v1_5ep_32b_5CL_2FC.h5")
+	elif bot_args.model_3:
+		print("Launching the model: 32batches, 5convl, 2FCl, 10 epochs")
+		model = local_commands.run_model(dirname + "\\models\\NSFWdetect_v1_10ep_32b_5CL_2FC.h5")
+else:
+	print("Launching the model: 32batches, 5convl, 2FCl, 20 epochs")
+	model = local_commands.run_model(dirname + "\\models\\NSFWdetect_v1_20ep_32b_5CL_2FC.h5")
 
 #Initializing the bot
 bot = commands.Bot(command_prefix = "!")

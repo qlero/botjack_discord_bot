@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="botjack_discord_bot",
-    version="2.0",
+    version="1.0",
     author="LMquentinLR",
-    description="Discord bot implementation with a NSFW image detection functionality",
+    description="Discord bot implementation with an ML-trained image classification function.",
     long_description=long_description,
     long_description_content_type="text/markdown",
 	url = "https://github.com/LMquentinLR/botjack_discord_bot",
