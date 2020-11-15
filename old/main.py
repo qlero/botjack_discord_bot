@@ -8,7 +8,7 @@ import time
 #################/!\#################
 #to remove before uploading to github
 #################/!\#################
-token = "NTkwMzMzNTc4NzIyNjcyNjQw.XeyS4Q.gWG8kzmfCaat7LN7Mz7WhtoOqso"
+token = ""
 #################/!\#################
 #################/!\#################
 
