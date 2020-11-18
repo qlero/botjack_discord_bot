@@ -11,7 +11,7 @@ from urllib.request import Request, urlopen
 
 def main_help(functions, author):
 	"""
-	Prints the !help message to the chat.
+	Prints the !info message to the chat.
 	-----
 	:param <functions>: <class 'dict'> ; dictionary of available botjack commands
 	:param <author>: <class 'str'> ; author of the command
@@ -21,12 +21,12 @@ def main_help(functions, author):
 		msg += key + ", " if index + 1 < len(functions) else key
 	else:
 		msg = f"**Available Commands**\nHello {author}. I currently have {len(functions)} functions or commands." + \
-		"```" + msg + "```\nFor help with a particular command, use ``!help`` followed by the command name."
+		"```" + msg + "```\nFor help with a particular command, use ``!info`` followed by the command name."
 	return msg
 
 def specific_help(functions, func):
 	"""
-	Prints the specific ?help <command> message to the chat.
+	Prints the specific !info <command> message to the chat.
 	-----
 	:param <functions>: <class 'dict'> ; dictionary of available botjack commands
 	:param <func>: <class 'str'> ; command requested by user
@@ -62,7 +62,8 @@ def roll(roll, author):
 	if len(split) == 2:
 		if ((split[0].isdigit() and split[1].isdigit()) and
 			(int(split[0]) != 0 and int(split[1]) != 0)):
-			msg = f"{(random.randrange(0, int(split[1]))+1) * int(split[0])}"
+                    rnd = random.randint(1, (int(split[1])+1)*int(split[0]))
+                    msg=f"{rnd}"
 	
 	return msg
 

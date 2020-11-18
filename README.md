@@ -4,10 +4,15 @@ It offers several functionalities:
 
 | Functions | Descriptions |
 | ------ | ------ |
-| !help | Describes the functions currently available |
-| ?help ``<function_name>`` | Provides some details on the function |
+| !help | Describes the functions currently available to the bot |
+| ?info | A more interactive help |
 | !avatar | Cites the reddit account of the bot's avatar |
 | !roll ``<val>d<val>`` | Dice rolling function |
+
+As well has an image detection implementation. 
+
+| Functions | Descriptions |
+| ------ | ------ |
 | *ML detection* | Provides a ML-modeled result for each picture directly uploaded to discord |
 
 ### Installation
